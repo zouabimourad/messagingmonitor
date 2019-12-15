@@ -1,0 +1,30 @@
+td {
+
+  text-align: center;
+
+}
+
+td.eventCount {
+
+  font-weight: bold;
+
+}
+
+td.averageRate {
+  font-weight: bold;
+}
+
+td.details {
+  text-align: left;
+}
+
+
+td.details span.title {
+  font-weight: bold;
+}
+
+
+
+
+
+

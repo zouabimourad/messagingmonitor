@@ -1,0 +1,38 @@
+plugins {
+  id "com.moowork.node" version "1.3.1"
+}
+
+apply plugin: "com.moowork.node"
+apply plugin: "docker"
+
+node {
+  version = '10.14.1'
+  npmVersion = '6.4.1'
+  download = true
+  workDir = file("${project.buildDir}/node")
+  nodeModulesDir = project.projectDir
+}
+
+task build(type: NpmTask) {
+  args = ['run', 'build']
+}
+
+build.dependsOn(npm_install)
+
+task buildDocker(type: Docker, dependsOn: build) {
+
+  def projectName = "messaging-monitor"
+  def artifactName = "monitor-front"
+  maintainer = "zouabi.mourad@gmail.com"
+
+  tag = "$projectName/$artifactName"
+  dockerfile = file('./Dockerfile')
+  doFirst {
+    copy {
+      from file("dist")
+      from file("nginx.conf")
+      into stageDir
+    }
+  }
+
+}

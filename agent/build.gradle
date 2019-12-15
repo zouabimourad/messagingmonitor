@@ -1,0 +1,25 @@
+apply plugin: 'org.springframework.boot'
+
+dependencies {
+
+    implementation project(":common")
+
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    compile group: 'org.springframework', name: 'spring-jms'
+    implementation 'org.springframework.retry:spring-retry'
+    implementation 'com.google.guava:guava:28.0-jre'
+
+    // protocols connectors
+    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.1'
+    implementation 'org.apache.qpid:qpid-jms-client:0.45.0'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
+
+}

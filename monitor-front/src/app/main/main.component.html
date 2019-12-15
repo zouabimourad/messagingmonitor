@@ -1,0 +1,55 @@
+<div nz-row [nzGutter]="8" style="padding-bottom: 8px;">
+
+  <div nz-col [nzSpan]="12">
+    <app-producer (task)="onNewTasks($event)" [agents]="agents" [brokers]="brokers" [protocols]="protocols"
+                  [defaultCommand]="producerDefaultCommand"></app-producer>
+  </div>
+
+  <div nz-col [nzSpan]="12">
+    <app-consumer (task)="onNewTasks($event)" [agents]="agents" [brokers]="brokers" [protocols]="protocols"
+                  [defaultCommand]="consumerDefaultCommand"></app-consumer>
+  </div>
+
+</div>
+
+<div nz-row [nzGutter]="8" *ngIf="runningTasks.length > 0">
+
+  <div nz-col [nzSpan]="24">
+
+    <nz-card nzTitle="Tasks" id="tasks-table" [nzSize]="'small'" [nzExtra]="tasksHeader" >
+
+      <nz-table #tasksTable nzBordered [nzData]="runningTasks" [nzPageSize]="20" [nzSize]="'middle'">
+        <thead>
+        <tr>
+          <th nzWidth="140px">Agent / Client Id</th>
+          <th nzWidth="140px">Type / Protocol</th>
+          <th nzWidth="140px">Destination</th>
+          <th nzWidth="140px">Delivery Type / QOS</th>
+          <th nzWidth="140px">Messages count / Elapsed Time</th>
+          <th nzWidth="140px">Average Rate (messages/s)</th>
+          <th>Details</th>
+          <th nzWidth="550px">Rate (messages/s)</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr *ngFor="let data of tasksTable.data" app-task [agents]="agents" [taskSummary]="data">
+
+        </tr>
+
+        </tbody>
+
+      </nz-table>
+
+    </nz-card>
+
+    <ng-template #tasksHeader>
+
+      <a *ngIf="anyRunningTask()"  nz-popconfirm nzTitle="Are you sure to cancel all running Tasks ?"
+         (nzOnConfirm)="cancelRunningTasks()">Cancel all running Tasks</a>
+
+    </ng-template>
+
+  </div>
+
+</div>

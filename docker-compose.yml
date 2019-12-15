@@ -1,0 +1,55 @@
+version: "3.4"
+
+x-appSolaceBrokerEnv: &appSolaceBrokerEnv
+  BROKER_HOST: solace
+  BROKER_PORT: 5672
+  BROKER_USERNAME: default
+  BROKER_PASSWORD: default
+
+services:
+
+  monitor-front:
+    image: messaging-monitor/monitor-front:latest
+    ports:
+      - "8080:80"
+    depends_on:
+      - monitor
+
+  monitor:
+    image: messaging-monitor/monitor:latest
+    environment:
+      <<: *appSolaceBrokerEnv
+      BROKER_DEFAULT_HOST: solace
+    depends_on:
+      - solace
+
+  agent1:
+    image: messaging-monitor/agent:latest
+    environment:
+      <<: *appSolaceBrokerEnv
+      IDENTIFIER: agent1
+    depends_on:
+      - monitor
+
+  agent2:
+    image: messaging-monitor/agent:latest
+    environment:
+      <<: *appSolaceBrokerEnv
+      IDENTIFIER: agent2
+    depends_on:
+      - monitor
+
+  solace:
+    container_name: pubSubStandardSingleNode
+    image: solace/solace-pubsub-standard:latest
+    shm_size: 1g
+    ulimits:
+      core: 1
+      nofile:
+        soft: 2448
+        hard: 38048
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 1
+

@@ -1,0 +1,26 @@
+<ul nz-menu [nzMode]="'horizontal'">
+  <li nz-menu-item routerLinkActive="ant-menu-item-selected" [routerLinkActiveOptions]="{exact: true}">
+    <a [routerLink]="['']">
+      <i nz-icon type="mail"></i>Producer / Consumer
+    </a>
+  </li>
+
+  <li nz-menu-item routerLinkActive="ant-menu-item-selected" [routerLinkActiveOptions]="{exact: true}">
+    <a [routerLink]="['agents']">
+      <i nz-icon nzType="deployment-unit"></i>Agents
+    </a>
+  </li>
+
+  <li nz-menu-item routerLinkActive="ant-menu-item-selected" [routerLinkActiveOptions]="{exact: true}">
+    <a [routerLink]="['brokers']">
+      <i nz-icon nzType="cloud-server"></i> Brokers
+    </a>
+  </li>
+
+</ul>
+
+<div style="background: #ECECEC;padding:8px;">
+  <router-outlet></router-outlet>
+</div>
+
+<nz-back-top></nz-back-top>

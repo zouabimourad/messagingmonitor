@@ -1,0 +1,125 @@
+<div [formGroup]="parentForm">
+
+  <div nz-row>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzFor="protocol">Protocol</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <nz-radio-group formControlName="protocol" (ngModelChange)="onProtocolChange($event)">
+            <label *ngFor="let p of protocols" nz-radio nzValue="{{p.code}}">{{p.code}}</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzFor="agentUrl">Agent</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <nz-select formControlName="agentPublicId" style="width: 100%;" nzShowSearch nzAllowClear
+                     nzPlaceHolder="Select an agent">
+            <nz-option *ngFor="let agent of agents" nzLabel="{{agent.publicId}}"
+                       nzValue="{{agent.publicId}}"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+  </div>
+
+  <div nz-row>
+
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzFor="brokerPublicId">Broker</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+
+          <nz-select formControlName="brokerPublicId" style="width: 100%;" nzShowSearch nzAllowClear
+                     nzPlaceHolder="Select an broker">
+            <nz-option *ngFor="let broker of protocolBrokers" nzLabel="{{broker.host}}"
+                       nzValue="{{broker.publicId}}"></nz-option>
+          </nz-select>
+
+        </nz-form-control>
+
+      </nz-form-item>
+    </div>
+
+
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzFor="clientId">Client Id</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input formControlName="clientId" id="clientId">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+
+  </div>
+
+  <div nz-row>
+
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzFor="destination">Destination</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input formControlName="destination" id="destination">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+
+    <div nz-col [nzSpan]="12">
+      <nz-form-item *ngIf="parentForm.controls.protocol.value === 'AMQP'">
+        <nz-form-label [nzSpan]="7" nzFor="protocol">Destination type</nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <nz-radio-group formControlName="jmsDestinationType">
+            <label nz-radio nzValue="TOPIC">Topic</label>
+            <label nz-radio nzValue="QUEUE">Queue</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+
+    <div nz-col [nzSpan]="12">
+      <nz-form-item *ngIf="parentForm.controls.protocol.value === 'MQTT'">
+        <nz-form-label [nzSpan]="7" nzFor="mqttQos">QOS</nz-form-label>
+        <nz-form-control [nzSpan]="4">
+          <nz-slider formControlName="mqttQos" id="mqttQos" [nzMin]="0" [nzMax]="2" nzIncluded
+                     [nzMarks]="[0, 1, 2]"></nz-slider>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <ng-content></ng-content>
+
+  <div nz-row>
+
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-control>
+          <nz-form-label [nzSpan]="7" nzFor="commandsCount">Task Count</nz-form-label>
+          <nz-form-control [nzSpan]="16">
+            <nz-input-number nz-input [nzMin]="1" [nzMax]="10" formControlName="commandsCount"
+                             id="commandsCount"></nz-input-number>
+          </nz-form-control>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-control [nzSpan]="16" [nzOffset]="7">
+          <button nz-button nzType="primary" [nzLoading]="loading" [disabled]="!parentForm.valid"
+                  (click)="command()">Create
+          </button>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+  </div>
+
+</div>

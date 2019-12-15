@@ -1,0 +1,12 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = 'eventsflowmonitor'
+
+include "common"
+include "monitor"
+include "monitor-front"
+include "agent"

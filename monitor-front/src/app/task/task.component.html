@@ -1,0 +1,65 @@
+<td>{{ getAgentName(taskSummary.command.agentPublicId) }}
+  <ng-container *ngIf="taskSummary.lastReport != null && taskSummary.lastReport.status != null">
+    <nz-badge *ngIf="taskSummary.lastReport.status == 'RUNNING'" nzStatus="processing"></nz-badge>
+    <nz-badge *ngIf="taskSummary.lastReport.status == 'ERROR'" nzStatus="error"></nz-badge>
+  </ng-container>
+  <br/><br/>
+  {{ taskSummary.clientId }}
+</td>
+
+<td>
+  {{ taskSummary.command.type }} {{ taskSummary.command.protocol }}
+</td>
+
+<td>
+  <div *ngIf="taskSummary.command.protocol == 'AMQP'"> {{taskSummary.command.jmsDestinationType}} : <br/></div>
+  {{ taskSummary.command.destination }}
+</td>
+
+<td>
+  <div *ngIf="taskSummary.command.protocol == 'MQTT'">
+    QOS {{ taskSummary.command.mqttQos }}
+  </div>
+  <div *ngIf="taskSummary.command.protocol == 'AMQP'">
+    {{ taskSummary.command.jmsDeliveryMode }}
+  </div>
+</td>
+
+<td class="eventCount">
+  <ng-container *ngIf="taskSummary.lastReport != null">
+    {{ taskSummary.lastReport.eventCount }}  <br/>
+    <span *ngIf="taskSummary.lastReport.elapsedTime != null"> {{ taskSummary.lastReport.elapsedTime / 1000 }} s</span>
+  </ng-container>
+</td>
+
+<td class="averageRate">
+  <ng-container *ngIf="taskSummary.lastReport != null">
+    {{ taskSummary.lastReport.averageRate }}
+  </ng-container>
+</td>
+
+<td class="details">
+  <ng-container *ngIf="isAMQPTopicConsumer()">
+    <span class="title">Shared consumer</span> : {{taskSummary.command.jmsSharedConsumer}}<br/>
+    <span class="title">Durable consumer</span> : {{taskSummary.command.jmsDurableConsumer}}<br/>
+    <span class="title">Consumer name</span> : {{taskSummary.command.jmsConsumerName}}<br/>
+  </ng-container>
+</td>
+
+<td>
+  <div class="chart-container">
+    <ngx-charts-line-chart
+      [view]="view"
+      [scheme]="colorScheme"
+      [results]="multi"
+      [gradient]="true"
+      [xAxis]="false"
+      [yAxis]="true"
+      [legend]="''"
+      [showXAxisLabel]="false"
+      [showYAxisLabel]="true"
+      [xAxisLabel]="''"
+      [yAxisLabel]="''"
+      [autoScale]="true"></ngx-charts-line-chart>
+  </div>
+</td>

@@ -1,0 +1,102 @@
+<nz-card nzTitle="Producer" [nzSize]="'small'">
+
+  <form nz-form [formGroup]="producerForm">
+
+    <app-peer-form [parentForm]="producerForm" [agents]="agents" [brokers]="brokers" [protocols]="protocols" [loading]="loading" (submit)="command()" >
+
+      <div nz-row *ngIf="producerForm.controls.protocol.value  == 'AMQP'">
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzFor="jmsDeliveryMode">Delivery Mode</nz-form-label>
+            <nz-form-control [nzSpan]="16">
+              <nz-radio-group formControlName="jmsDeliveryMode">
+                <label nz-radio nzValue="NON_PERSISTENT">Non persistent</label>
+                <label nz-radio nzValue="PERSISTENT">Persistent</label>
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzFor="jmsTimeToLive">TTL</nz-form-label>
+            <nz-form-control [nzSpan]="16">
+              <nz-input-group  nzAddOnAfter="ms">
+              <nz-input-number nz-input formControlName="jmsTimeToLive" id="jmsTimeToLive"></nz-input-number>
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-control [nzSpan]="16" [nzOffset]="7">
+              <label nz-checkbox formControlName="customMessage" id="customMessage">Custom message</label>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col [nzSpan]="12">
+
+          <nz-form-item *ngIf="!producerForm.controls.customMessage.value">
+            <nz-form-label [nzSpan]="7" nzFor="messageSize">Message Size</nz-form-label>
+            <nz-form-control [nzSpan]="16">
+
+              <nz-input-group  nzAddOnAfter="KBs">
+              <nz-input-number nz-input [nzMin]="1" [nzMax]="100" formControlName="messageSize" id="messageSize"></nz-input-number>
+              </nz-input-group>
+
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item *ngIf="producerForm.controls.customMessage.value">
+            <nz-form-label [nzSpan]="7" nzFor="message">Message</nz-form-label>
+            <nz-form-control [nzSpan]="16">
+              <input nz-input formControlName="message" id="message">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+      </div>
+
+      <div nz-row>
+
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzFor="messagesCount">Messages Count</nz-form-label>
+            <nz-form-control [nzSpan]="16">
+              <nz-input-number nz-input [nzMin]="1" formControlName="messagesCount" id="messagesCount"></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-control [nzOffset]="7" [nzSpan]="16">
+              <label nz-checkbox formControlName="async" id="async">Async ack</label>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+      </div>
+
+      <div nz-row>
+
+        <div nz-col [nzSpan]="12" *ngIf="producerForm.controls.protocol.value  == 'MQTT'">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzFor="mqttMaxInFlight">Max in flight</nz-form-label>
+            <nz-form-control [nzSpan]="16">
+              <nz-input-number nz-input  formControlName="mqttMaxInFlight" id="mqttMaxInFlight"></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+    </app-peer-form>
+
+  </form>
+
+</nz-card>

@@ -1,0 +1,66 @@
+<nz-card nzTitle="Consumer" [nzSize]="'small'">
+
+  <form nz-form [formGroup]="consumerForm">
+
+    <app-peer-form [parentForm]="consumerForm" [agents]="agents" [brokers]="brokers" [protocols]="protocols" [loading]="loading" (submit)="command()">
+
+      <ng-container *ngIf="consumerForm.controls.protocol.value === 'AMQP' && consumerForm.controls.jmsDestinationType.value === 'TOPIC' ">
+
+        <div nz-row>
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="7" nzFor="jmsConsumerName">Misc.</nz-form-label>
+              <nz-form-control [nzSpan]="16">
+                <label nz-checkbox formControlName="jmsDurableConsumer" id="jmsDurableConsumer">Durable</label>
+                <label nz-checkbox formControlName="jmsSharedConsumer" id="jmsSharedConsumer">Shared</label>
+              </nz-form-control>
+            </nz-form-item>
+
+          </div>
+
+          <div nz-col [nzSpan]="12"
+               *ngIf="consumerForm.controls.jmsDurableConsumer.value || consumerForm.controls.jmsSharedConsumer.value">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="7" nzFor="jmsConsumerName">Consumer name</nz-form-label>
+              <nz-form-control [nzSpan]="16">
+                <input nz-input formControlName="jmsConsumerName" id="jmsConsumerName">
+              </nz-form-control>
+            </nz-form-item>
+
+          </div>
+        </div>
+
+      </ng-container>
+
+      <div nz-row>
+
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzFor="messagesCount">Messages Count</nz-form-label>
+            <nz-form-control [nzSpan]="16">
+              <nz-input-number nz-input [nzMin]="1" formControlName="messagesCount" id="messagesCount"></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+
+        </div>
+
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzFor="consumptionPeriod">Period</nz-form-label>
+            <nz-form-control [nzSpan]="16">
+
+              <nz-input-group  nzAddOnAfter="Minutes">
+                <nz-input-number nz-input [nzMin]="1" [nzMax]="15" formControlName="consumptionPeriod" id="consumptionPeriod"></nz-input-number>
+              </nz-input-group>
+
+            </nz-form-control>
+          </nz-form-item>
+
+        </div>
+      </div>
+      
+    </app-peer-form>
+
+  </form>
+
+</nz-card>

@@ -1,0 +1,27 @@
+<div nz-row [nzGutter]="8" style="padding-bottom: 8px;">
+
+  <div nz-col [nzSpan]="24">
+    <nz-card nzTitle="Agents list" [nzSize]="'small'">
+
+      <nz-table #agentsTable [nzData]="agents" [nzSize]="'middle'">
+
+        <thead>
+        <tr>
+          <th nzWidth="350px">Name</th>
+          <th>Details</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let data of agentsTable.data">
+          <td>{{ data.publicId }}</td>
+          <td style="white-space: pre-line;">{{ data.details }}</td>
+        </tr>
+        </tbody>
+
+      </nz-table>
+
+    </nz-card>
+  </div>
+
+</div>

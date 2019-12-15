@@ -1,0 +1,21 @@
+version: "3.4"
+
+services:
+
+  solace:
+    container_name: pubSubStandardSingleNode
+    image: solace/solace-pubsub-standard:latest
+    shm_size: 1g
+    ulimits:
+      core: 1
+      nofile:
+        soft: 2448
+        hard: 38048
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 1
+
+    ports:
+      - "1883:1883"
+      - "5672:5672"

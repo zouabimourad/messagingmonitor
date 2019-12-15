@@ -1,0 +1,165 @@
+<div nz-row [nzGutter]="8" style="padding-bottom: 8px;">
+
+  <div nz-col [nzSpan]="24">
+
+    <nz-card nzTitle="Add Broker" [nzSize]="'small'">
+
+      <div nz-row>
+
+        <div nz-col [nzSpan]="12">
+
+          <form nz-form [formGroup]="brokerForm">
+
+            <div nz-row>
+
+              <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                  <nz-form-label [nzSpan]="7" nzFor="host">Broker Host</nz-form-label>
+                  <nz-form-control [nzSpan]="16">
+                    <input nz-input formControlName="host" id="host">
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                  <nz-form-control  [nzOffset]="7" [nzSpan]="16">
+                    <label nz-checkbox formControlName="secured" id="secured">Secured</label>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row>
+
+              <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                  <nz-form-label [nzSpan]="7" nzFor="username">Username</nz-form-label>
+                  <nz-form-control [nzSpan]="16">
+                    <input nz-input formControlName="username" id="username">
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                  <nz-form-label [nzSpan]="7" nzFor="password">Password</nz-form-label>
+                  <nz-form-control [nzSpan]="16">
+                    <input nz-input type="password" formControlName="password" id="password">
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+            </div>
+
+            <div nz-row>
+
+              <div nz-col [nzSpan]="12">
+                <nz-form-item>
+
+                  <nz-form-control [nzOffset]="7" [nzSpan]="16">
+                    <label nz-checkbox formControlName="supportsMqtt" id="supportsMqtt">MQTT</label>
+                  </nz-form-control>
+
+                </nz-form-item>
+              </div>
+
+              <div nz-col [nzSpan]="12" *ngIf="brokerForm.controls.supportsMqtt.value">
+                <nz-form-item>
+                  <nz-form-label [nzSpan]="7" nzFor="mqttPort">Port</nz-form-label>
+                  <nz-form-control [nzSpan]="16">
+                    <nz-input-number nz-input formControlName="mqttPort" id="mqttPort"></nz-input-number>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+            </div>
+
+            <div nz-row>
+
+              <div nz-col [nzSpan]="12">
+                <nz-form-item>
+
+                  <nz-form-control [nzOffset]="7" [nzSpan]="16">
+                    <label nz-checkbox formControlName="supportsAmqp" id="supportsAmqp">AMQP</label>
+                  </nz-form-control>
+
+                </nz-form-item>
+              </div>
+
+              <div nz-col [nzSpan]="12" *ngIf="brokerForm.controls.supportsAmqp.value">
+                <nz-form-item>
+                  <nz-form-label [nzSpan]="7" nzFor="amqpPort">Port</nz-form-label>
+                  <nz-form-control [nzSpan]="16">
+                    <nz-input-number nz-input formControlName="amqpPort" id="amqpPort"></nz-input-number>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+            </div>
+
+            <div nz-row>
+
+              <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                  <nz-form-control [nzSpan]="6" [nzOffset]="7">
+                    <button nz-button nzType="primary" [disabled]="!brokerForm.valid" (click)="save()">Add</button>
+                  </nz-form-control>
+                </nz-form-item>
+
+              </div>
+
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </nz-card>
+
+  </div>
+
+  <div nz-col [nzSpan]="24">
+
+    <nz-card nzTitle="Brokers list" [nzSize]="'small'">
+
+      <nz-table #brokersTable [nzData]="brokers" [nzSize]="'middle'">
+
+        <thead>
+        <tr>
+          <th>Host</th>
+          <th>Secured</th>
+          <th>Username</th>
+          <th>MQTT Port</th>
+          <th>AMQP Port</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let data of brokersTable.data">
+          <td>{{ data.host }}</td>
+          <td>{{ data.secured }}</td>
+          <td>{{ data.username }}</td>
+          <td>{{ data.mqttPort }}</td>
+          <td>{{ data.amqpPort }}</td>
+          <td>
+            <a *ngIf="data.publicId != 'EMBEDDED'" nz-popconfirm nzTitle="Are you sure delete this broker ?"
+               (nzOnConfirm)="delete(data)">Delete</a>
+          </td>
+        </tr>
+        </tbody>
+
+      </nz-table>
+
+    </nz-card>
+
+  </div>
+
+
+</div>
+
+
+
+
