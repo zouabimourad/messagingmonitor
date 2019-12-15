@@ -8,7 +8,11 @@ It uses Solace Pub/Sub+ internally and as a default broker but it can use any ot
 
 ## Architecture
 
-![alt text](arch.png)
+![](arch.png)
+
+## Demo
+
+![](demo.gif)
 
 ## Build
 
@@ -21,7 +25,7 @@ It uses Solace Pub/Sub+ internally and as a default broker but it can use any ot
 
 `./gradlew build buildDocker`
 
-## Run ( example with 1 monitor, 2 agents and Solace Pub/Sub+ )
+## Run ( example with 1 monitor, 2 agents and Solace Pub/Sub+ (internal broker and as a test broker) )
 
 `docker-compose up`
 
